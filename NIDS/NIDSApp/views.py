@@ -14,13 +14,17 @@ def scanPCAP(request):
         if 'pcap_file' not in request.FILES:
             return HttpResponseBadRequest('No file uploaded!')
 
-        pcap_file = request.FILES['pcap_file']  # Access the uploaded file object
+        pcap_file = request.FILES['pcap_file']
+
+        # Access the filename
+        filename = pcap_file.name
 
         # Read the file content
         with pcap_file.open(mode='rb') as f:
             file_content = f.read()
 
-        # Process the file content as needed (e.g., save it, analyze it)
+        # Process the filename and file content as needed
+        print(f"Filename: {filename}")
         # ... your logic here ...
 
         return HttpResponse('File content processed successfully!')
