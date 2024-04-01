@@ -4,4 +4,7 @@ from django.http import HttpResponse
 # Create your views here.
 
 def processPCAP(request):
-    return HttpResponse("Hello World!")
+    return render(request, 'index.html')
+
+def scanPCAP(request):
+    return HttpResponse('Hello World')

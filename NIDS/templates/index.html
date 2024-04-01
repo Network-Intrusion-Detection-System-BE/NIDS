@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <div class="relative h-screen bg-gradient-to-r from-slate-500 to-blue-500">
         <div class="bg-slate-900 text-white shadow-xl p-5 bg-slate-200 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 space-y-6 rounded-md">
             <p class="text-center text-sm">Upload the PCAP file</p>
-            <form method="post" enctype="multipart/form-data" action="{% url 'your_django_view_name' %}">
+            <form method="post" enctype="multipart/form-data" action="{% url 'scan' %}">
                 <div>
                     <input type="file" name="pcap_file" id="pcap_file" accept=".pcap, .pcapng">
                 </div>
