@@ -17,10 +17,12 @@ from django.shortcuts import render
 
 loop = asyncio.new_event_loop()
 
+model = joblib.load('./NIDSApp/model.joblib')
+
 # Create your views here.
 def scanAttacks(file_name):
     with pyshark.FileCapture(file_name) as capture : 
-        attack_type_array = []
+        result_array = []
         n = 0
         for packet in capture:
             try:
@@ -174,6 +176,7 @@ def scanAttacks(file_name):
                     serror_rate = syn_error_rate_icmp
                 else:
                     serror_rate = 0
+
         ####    # 27. Rate of packets that have the 'R' (reset) flag set in TCP packets among all packets
                 rerror_tcp_packets = 0
                 rerror_icmp_packets = 0
@@ -188,7 +191,6 @@ def scanAttacks(file_name):
                     rerror_rate_tcp = (rerror_tcp_packets / total_tcp_packets) * 100 if total_tcp_packets > 0 else 0
                     rerror_rate_icmp = (rerror_icmp_packets / total_icmp_packets) * 100 if total_icmp_packets > 0 else 0
                     return rerror_rate_tcp, rerror_rate_icmp
-                
                 rerror_rate_tcp, rerror_rate_icmp = calculate_rerror_rate(total_tcp_packets, total_icmp_packets, rerror_tcp_packets, rerror_icmp_packets)
                 if 'TCP' in packet:
                     rerror_rate = rerror_rate_tcp
@@ -196,35 +198,30 @@ def scanAttacks(file_name):
                     rerror_rate = rerror_rate_icmp
                 else:
                     rerror_rate = 0
+                
                 attack_encoding = {0: 'DoS', 1: 'Probe', 2: 'R2L', 3: 'U2R', 4: 'normal'}
                 
+                
                 if(protocol_type!=-1):
-                    print('[', duration,',', protocol_type,',', service, ',', flag, ',', src_bytes, ',', dst_bytes, ',', urgent,
-                        ',', num_failed_logins, ',', serror_rate, ',', rerror_rate,']')
+                    packet_array = [duration, protocol_type, service, flag, src_bytes, dst_bytes, urgent, num_failed_logins, serror_rate, rerror_rate]
+                    # print('[', duration,',', protocol_type,',', service, ',', flag, ',', src_bytes, ',', dst_bytes, ',', urgent,
+                    #     ',', num_failed_logins, ',', serror_rate, ',', rerror_rate,']')
                     n += 1
-                    model = joblib.load('./NIDSApp/model.joblib')
-                    attack_type = model.predict([[duration, protocol_type, service, flag, src_bytes, dst_bytes, urgent, num_failed_logins, serror_rate, rerror_rate]])
-                    attack_type_array.append(attack_encoding[attack_type[0]])
-                    if(n==20):
-                        break
+                    # attack_type = model.predict([packet_array])
+                    # packet_array.append(attack_encoding[attack_type[0]])
+                    packet_array.append(attack_encoding[model.predict([packet_array])[0]])
+                    result_array.append(packet_array)
+                    # if(n==20):
+                    #     break
             except AttributeError as e:
                 pass
-        return attack_type_array
+        print(result_array)
+        return result_array
 
 def processPCAP(request):
     return render(request, 'index.html')
 
 def scanPCAP(request):
-    # if request.method == 'POST':
-    #     form = FileUploadForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         form.save()
-    #         # Process the uploaded file here
-    #         return render(request, 'upload_success.html')
-    # else:
-    #     form = FileUploadForm()
-    # return render(request, 'upload_file.html', {'form': form})
-
     if request.method == 'POST':
         if 'pcap_file' not in request.FILES:
             return HttpResponseBadRequest('No file uploaded!')
@@ -238,7 +235,7 @@ def scanPCAP(request):
 
         # Call scanAttacks with the file path
         asyncio.set_event_loop(loop)
-        print("FILE_NAME = "  ,file_name)
+        # print("FILE_NAME = "  ,file_name)
         # print("PCAP FILE = " , pcap_file.file.getvalue())
         attack_array = scanAttacks(file_name)
         print(attack_array)
