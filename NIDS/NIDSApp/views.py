@@ -14,6 +14,7 @@ import asyncio
 import os
 import tempfile
 from django.shortcuts import render
+from django.http import JsonResponse
 
 loop = asyncio.new_event_loop()
 
@@ -211,12 +212,12 @@ def scanAttacks(file_name):
                     # packet_array.append(attack_encoding[attack_type[0]])
                     packet_array.append(attack_encoding[model.predict([packet_array])[0]])
                     result_array.append(packet_array)
-                    # if(n==20):
-                    #     break
+                    if(n==20):
+                        break
             except AttributeError as e:
                 pass
         print(result_array)
-        return result_array
+        return JsonResponse(result_array, safe=False)
 
 def processPCAP(request):
     return render(request, 'index.html')
