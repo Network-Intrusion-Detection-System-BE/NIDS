@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div>
+        <table class="table-auto w-full">
+        <thead>
+            <tr class="bg-gray-100 text-gray-600 text-left">
+            <th class="px-3 py-2">Duration</th>
+            <th class="px-3 py-2">Protocol Type</th>
+            <th class="px-3 py-2">Service</th>
+            <th class="px-3 py-2">Flag</th>
+            <th class="px-3 py-2">Source Bytes</th>
+            <th class="px-3 py-2">Destination Bytes</th>
+            <th class="px-3 py-2">Urgent?</th>
+            <th class="px-3 py-2">Number of Failed Logins</th>
+            <th class="px-3 py-2">SYN Flag Error Rate</th>
+            <th class="px-3 py-2">RST Flag Error Rate</th>
+            <th class="px-3 py-2">Attack Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for packet in packets %}
+            <tr>
+                {% for data in packet %}
+                <td class="border px-3 py-2">{{ data }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+{% endblock content %}

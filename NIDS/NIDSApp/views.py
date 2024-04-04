@@ -15,6 +15,9 @@ import os
 import tempfile
 from django.shortcuts import render
 from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from . serializer import *
 
 loop = asyncio.new_event_loop()
 
@@ -217,7 +220,7 @@ def scanAttacks(file_name):
             except AttributeError as e:
                 pass
         print(result_array)
-        return JsonResponse(result_array, safe=False)
+        return result_array
 
 def processPCAP(request):
     return render(request, 'index.html')
@@ -244,5 +247,5 @@ def scanPCAP(request):
         # Clean up the temporary file
         # os.unlink(pcap_file)
         # print(pcap_file)
-        return HttpResponse(f'<h1>File recieved successfully!</h1><h2>Name of the File: {pcap_file}</h2>')
-    return render(request, 'upload_pcap.html')
+        # return HttpResponse(f'<h1>File recieved successfully!</h1><h2>Name of the File: {pcap_file}</h2>')
+    return render(request, 'NIDSApp/results1.html', {'packets': attack_array})
