@@ -4,10 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>NIDS</title>
-</head>
-<body>
+    <title>NIDS: {% block title %}{% endblock title %}</title></head>
+<body class="font-mono">
+    <nav class="bg-gray-800 dark:bg-gray-900">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+            <a href="/" class="text-green-600 text-xl font-bolder">NIDS</a>
+            <ul class="flex space-x-4 text-green-600">
+                <li><a href="/">Home</a></li>
+                <li><a href="#">About</a></li>
+                {% comment %} <li><a href="#">Contact</a></li> {% endcomment %}
+            </ul>
+        </div>
+    </nav>
     {% block content %}
     {% endblock content %}
+    <footer class="text-center py-4 bg-gray-800 dark:bg-gray-900">
+        <p class="space-x-4 text-green-600">&copy; 2024. All rights reserved.</p>
+        <p class="space-x-4 text-green-600">NIDS Application</p>
+    </footer>      
 </body>
 </html>

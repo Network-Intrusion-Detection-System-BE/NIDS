@@ -4,7 +4,7 @@
     <div>
         <table class="table-auto w-full">
         <thead>
-            <tr class="bg-gray-100 text-gray-600 text-left">
+            <tr class="text-gray-600 text-left bg-black text-white">
             <th class="px-3 py-2">Duration</th>
             <th class="px-3 py-2">Protocol Type</th>
             <th class="px-3 py-2">Service</th>
@@ -22,7 +22,11 @@
             {% for packet in packets %}
             <tr>
                 {% for data in packet %}
-                <td class="border px-3 py-2">{{ data }}</td>
+                    {% if data == 'Probe' or data == 'U2R' or data == 'R2L' or data == 'DoS' %}
+                        <td class="border px-3 py-2 bg-red-600 text-white">{{ data }}</td>
+                    {% else %}
+                        <td class="border px-3 py-2">{{ data }}</td>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}

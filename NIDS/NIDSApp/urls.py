@@ -4,8 +4,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.processPCAP, name='processPCAP'),
-    path('scan', views.scanPCAP, name='scan'),
+    path('', views.home, name='home'),
+    path('scanNetwork/', views.gotoScan, name='gotoScan'),
+    path('scanPCAPFile/', views.scanPCAP, name='scanPCAPFile'),
+    path('scanLiveTraffic/', views.scanTraffic, name='scanLiveTraffic'),
 ]
 
 # if settings.DEBUG:

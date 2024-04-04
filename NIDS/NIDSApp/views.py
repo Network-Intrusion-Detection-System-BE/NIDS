@@ -222,8 +222,11 @@ def scanAttacks(file_name):
         print(result_array)
         return result_array
 
-def processPCAP(request):
-    return render(request, 'index.html')
+def home(request):
+    return render(request, 'NIDSApp/index.html')
+
+def gotoScan(request):
+    return render(request, 'NIDSApp/scan.html')
 
 def scanPCAP(request):
     if request.method == 'POST':
@@ -248,4 +251,7 @@ def scanPCAP(request):
         # os.unlink(pcap_file)
         # print(pcap_file)
         # return HttpResponse(f'<h1>File recieved successfully!</h1><h2>Name of the File: {pcap_file}</h2>')
+    return render(request, 'NIDSApp/results1.html', {'packets': attack_array})
+
+def scanTraffic(request):
     return render(request, 'NIDSApp/results1.html', {'packets': attack_array})
