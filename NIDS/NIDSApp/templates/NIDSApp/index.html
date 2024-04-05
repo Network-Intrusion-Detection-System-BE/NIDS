@@ -4,32 +4,33 @@
 Home
 {% endblock title %}
 {% block content %}
-    <div class="bg-gradient-to-bl from-black to-gray-600 my-auto mx-auto px-4 py-40 text-white">
-      <div class="flex flex-col md:flex-row justify-between space-x-7">
-        <div class="w-full md:w-1/2">
-          <img
-            src="NIDSApp/HomePage-Pic.png"
-            alt="NIDS Image"
-            class="rounded-lg shadow-md"
-          />
-        </div>
-        <div class="w-full md:w-1/2 px-4 pt-8 md:pt-0">
-            <h1 class="text-4xl text-[#0eff00] font-bold text-center md:text-left mb-8">
-              Advanced Network Security with ML-powered NIDS
-            </h1>
-            <p class="text-xl text-center md:text-left mb-12">
-              Empower Your Network's Defense: Harnessing Machine Learning for
-              Unparalleled Security
-            </p>
-            
-            <div class="flex justify-center md:justify-start">
-                <form method="post" enctype="multipart/form-data" action="{% url 'gotoScan' %}">
-                {% csrf_token %}     
-                <button class="bg-[#0eff00] hover:bg-[#1fc600] text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-700 hover:scale-110">
-                  Get Started
-                </button>
-            </div>
-          </div>
+<div class="bg-gradient-to-bl from-black to-gray-600 my-auto mx-auto px-4 py-40 text-white">
+  <div class="flex flex-row justify-between items-center">  <div class="w-full md:w-1/2 ">
+      <img
+        width="500"
+        height="500"
+        src="{% static 'HomePage-Pic.png' %}"
+        alt="NIDS Image"
+        class="rounded-lg shadow-md mb-5"
+      />
+    </div>
+    <div class="w-full md:w-1/2 px-4 pt-8 md:pt-0">
+      <h1 class="text-4xl text-[#0eff00] font-bold text-center md:text-left mb-8">
+        Advanced Network Security with ML-powered NIDS
+      </h1>
+      <p class="text-xl text-center md:text-left mb-12">
+        Empower Your Network's Defense: Harnessing Machine Learning for Unparalleled Security
+      </p>
+      <div class="flex justify-center md:justify-start">
+        <form method="post" enctype="multipart/form-data" action="{% url 'gotoScan' %}">
+          {% csrf_token %} 
+          <button class="bg-[#0eff00] hover:bg-[#1fc600] text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-700 hover:scale-110">
+            Get Started
+          </button>
+        </form>
       </div>
     </div>
+  </div>
+</div>
+
 {% endblock content %}    

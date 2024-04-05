@@ -8,6 +8,7 @@ urlpatterns = [
     path('scanNetwork/', views.gotoScan, name='gotoScan'),
     path('scanPCAPFile/', views.scanPCAP, name='scanPCAPFile'),
     path('scanLiveTraffic/', views.scanLiveTraffic, name='scanLiveTraffic'),
+    path('about/', views.about, name='about')
 ]
 
 # if settings.DEBUG:

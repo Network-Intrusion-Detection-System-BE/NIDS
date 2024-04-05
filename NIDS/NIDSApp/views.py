@@ -222,6 +222,9 @@ def scanAttacks(file_name):
                 pass
         # print(len(result_array))
         return result_array
+    
+def about(request):
+    return render(request, 'NIDSApp/about.html')
 
 def home(request):
     return render(request, 'NIDSApp/index.html')

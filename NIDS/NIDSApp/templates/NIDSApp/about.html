@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Scan Packets
+{% endblock title %}
+{% block content %}
+
+<div class="bg-gradient-to-bl from-black to-gray-600 min-h-screen text-white p-24 my-auto mx-auto">
+    <p class="text-xl typing">Ever vigilant, our application safeguards your network. It examines both recorded traffic (pcap files) and live internet activity, searching for patterns that indicate potential threats. By recognizing known malicious activity and spotting unusual behavior, it acts as your network's first line of defense.</p>
+
+  </div>
+
+<style>
+    .typing {
+      overflow: hidden;
+      white-space: wrap;
+      border-right: 2px solid white; /* Adjust color to match background */
+      width: 0;
+      animation: typing 3s steps(40, end) forwards;
+      /* animation: typing 3s ease forwards; */
+    }
+  
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+  </style>
+
+{% endblock content %}    
