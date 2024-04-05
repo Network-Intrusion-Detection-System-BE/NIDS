@@ -6,10 +6,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>NIDS: {% block title %}{% endblock title %}</title></head>
 <body class="font-mono">
-    <nav class="bg-gray-800 dark:bg-gray-900">
+    <nav class="bg-black dark:bg-gray-900">
         <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-            <a href="/" class="text-green-600 text-xl font-bolder">NIDS</a>
-            <ul class="flex space-x-4 text-green-600">
+            <a href="/" class="text-[#0eff00] text-2xl font-bold">NIDS</a>
+            <ul class="flex space-x-4 text-[#0eff00] text-medium font-bold">
                 <li><a href="/">Home</a></li>
                 <li><a href="#">About</a></li>
                 {% comment %} <li><a href="#">Contact</a></li> {% endcomment %}
@@ -18,9 +18,9 @@
     </nav>
     {% block content %}
     {% endblock content %}
-    <footer class="text-center py-4 bg-gray-800 dark:bg-gray-900">
-        <p class="space-x-4 text-green-600">&copy; 2024. All rights reserved.</p>
-        <p class="space-x-4 text-green-600">NIDS Application</p>
+    <footer class="text-center py-4 bg-black dark:bg-gray-900">
+        <p class="space-x-4 text-[#0eff00]">&copy; 2024. All rights reserved.</p>
+        <p class="space-x-4 text-[#0eff00]">NIDS Application</p>
     </footer>      
 </body>
 </html>

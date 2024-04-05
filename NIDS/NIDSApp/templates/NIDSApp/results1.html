@@ -4,10 +4,10 @@
 Scan Results
 {% endblock title %}
 {% block content %}
-    <div>
+    <div class="bg-black p-16">
         <table class="table-auto w-full">
         <thead>
-            <tr class="text-gray-600 text-left bg-black text-white">
+            <tr class="text-center bg-black text-[#0eff00]">
             <th class="px-3 py-2">Duration</th>
             <th class="px-3 py-2">Protocol Type</th>
             <th class="px-3 py-2">Service</th>
@@ -22,19 +22,23 @@ Scan Results
             </tr>
         </thead>
         <tbody>
+            {% if packets|length > 0 %}
             {% for packet in packets %}
-            <tr>
+            <tr class="text-center">
                 {% for data in packet %}
                     {% if data == 'Probe' or data == 'U2R' or data == 'R2L' or data == 'DoS' %}
                         <td class="border px-3 py-2 bg-red-600 text-white">{{ data }}</td>
                     {% elif data == 'Normal' %}
                         <td class="border px-3 py-2 bg-green-500">{{ data }}</td>
                     {% else %}
-                        <td class="border px-3 py-2 bg-gray-500">{{ data }}</td>
+                        <td class="border px-3 py-2 bg-gray-600">{{ data }}</td>
                     {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}
+            {% else %}
+                <p>The PCAP file does not contain any relevant packets.</p>
+            {% endif %}
         </tbody>
         </table>
     </div>

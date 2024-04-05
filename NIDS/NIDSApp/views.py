@@ -142,6 +142,7 @@ def scanAttacks(file_name):
                 else:
                     src_bytes = 0
                     dst_bytes = 0
+
             # 9. Urgent: Only for TCP packets
                 if 'TCP' in packet:
                     urgent = int(packet.tcp.urgent_pointer)
@@ -219,7 +220,7 @@ def scanAttacks(file_name):
                         break
             except AttributeError as e:
                 pass
-        # print(result_array)
+        # print(len(result_array))
         return result_array
 
 def home(request):
@@ -256,7 +257,7 @@ def scanPCAP(request):
 def scanLiveTraffic(request):
     asyncio.set_event_loop(loop)
     capture = pyshark.LiveCapture(interface='Wi-Fi')
-    capture.sniff(timeout=5)
+    capture.sniff(timeout=3)
 
     result_array = []
 
@@ -463,7 +464,7 @@ def scanLiveTraffic(request):
                 # packet_array.append(attack_encoding[attack_type[0]])
                 packet_array.append(attack_encoding[model.predict([packet_array])[0]])
                 result_array.append(packet_array)
-                if(n==50):
+                if(n==20):
                     break
         except AttributeError as e:
             pass
