@@ -23,9 +23,26 @@ loop = asyncio.new_event_loop()
 
 model = joblib.load('./NIDSApp/model.joblib')
 
+protocol_type_encoding = {'icmp': 0, 'tcp': 1, 'udp': 2, 'oth': -1}
+reverse_protocol_encoding = {0: 'ICMP', 1: 'TCP', 2: 'UDP', -1: 'OTH'}
+
+service_encoding = {'IRC': 0, 'X11': 1, 'Z39_50': 2, 'aol': 3, 'auth': 4,
+                    'bgp': 5, 'courier': 6, 'csnet_ns': 7, 'ctf': 8, 'daytime': 9, 'discard': 10, 'domain': 11, 'domain_u': 12,
+                    'echo': 13, 'eco_i': 14, 'ecr_i': 15, 'efs': 16, 'exec': 17, 'finger': 18, 'ftp': 19, 'ftp_data': 20,
+                    'gopher': 21, 'harvest': 22, 'hostnames': 23, 'http': 24, 'http_2784': 25, 'http_443': 26, 'http_8001': 27, 'imap4': 28,
+                    'iso_tsap': 29, 'klogin': 30, 'kshell': 31, 'ldap': 32, 'link': 33, 'login': 34, 'mtp': 35, 'name': 36,
+                    'netbios_dgm': 37, 'netbios_ns': 38, 'netbios_ssn': 39, 'netstat': 40, 'nnsp': 41, 'nntp': 42, 'ntp_u': 43, 'other': 44,
+                    'pm_dump': 45, 'pop_2': 46, 'pop_3': 47, 'printer': 48, 'private': 49, 'red_i': 50, 'remote_job': 51, 'rje': 52,
+                    'shell': 53, 'smtp': 54, 'sql_net': 55, 'ssh': 56, 'sunrpc': 57, 'supdup': 58, 'systat': 59, 'telnet': 60,
+                    'tftp_u': 61, 'tim_i': 62, 'time': 63, 'urh_i': 64, 'urp_i': 65, 'uucp': 66, 'uucp_path': 67, 'vmnet': 68, 'whois': 69}
+reverse_service_encoding = {v: k for k, v in service_encoding.items()}
+
+flag_encoding = {'OTH': 0, 'REJ': 1, 'RSTO': 2, 'RSTOS0': 3, 'RSTR': 4, 'S0': 5, 'S1': 6, 'S2': 7, 'S3': 8, 'SF': 9, 'SH': 10}
+reverse_flag_encoding = {v: k for k, v in flag_encoding.items()}
+
 # Create your views here.
 def scanAttacks(file_name):
-    with pyshark.FileCapture(file_name) as capture : 
+    with pyshark.FileCapture(file_name) as capture :
         result_array = []
         n = 0
         for packet in capture:
@@ -44,7 +61,6 @@ def scanAttacks(file_name):
                 duration = float(packet.frame_info.time_delta_displayed) * 10**6
                 
         ####    # 2. Protocol Type
-                protocol_type_encoding = {'icmp': 0, 'tcp': 1, 'udp': 2, 'oth': -1}
                 protocolTypeValue = packet.frame_info.protocols
                 
                 if 'icmp' in protocolTypeValue:
@@ -79,16 +95,6 @@ def scanAttacks(file_name):
                 service = serviceType
                 if service == 'None':
                     service = random.choice(['private', 'domain_u', 'other'])
-                service_encoding = {'IRC': 0, 'X11': 1, 'Z39_50': 2, 'aol': 3, 'auth': 4,
-                    'bgp': 5, 'courier': 6, 'csnet_ns': 7, 'ctf': 8, 'daytime': 9, 'discard': 10, 'domain': 11, 'domain_u': 12,
-                    'echo': 13, 'eco_i': 14, 'ecr_i': 15, 'efs': 16, 'exec': 17, 'finger': 18, 'ftp': 19, 'ftp_data': 20,
-                    'gopher': 21, 'harvest': 22, 'hostnames': 23, 'http': 24, 'http_2784': 25, 'http_443': 26, 'http_8001': 27, 'imap4': 28,
-                    'iso_tsap': 29, 'klogin': 30, 'kshell': 31, 'ldap': 32, 'link': 33, 'login': 34, 'mtp': 35, 'name': 36,
-                    'netbios_dgm': 37, 'netbios_ns'
-                                    : 38, 'netbios_ssn': 39, 'netstat': 40, 'nnsp': 41, 'nntp': 42, 'ntp_u': 43, 'other': 44,
-                    'pm_dump': 45, 'pop_2': 46, 'pop_3': 47, 'printer': 48, 'private': 49, 'red_i': 50, 'remote_job': 51, 'rje': 52,
-                    'shell': 53, 'smtp': 54, 'sql_net': 55, 'ssh': 56, 'sunrpc': 57, 'supdup': 58, 'systat': 59, 'telnet': 60,
-                    'tftp_u': 61, 'tim_i': 62, 'time': 63, 'urh_i': 64, 'urp_i': 65, 'uucp': 66, 'uucp_path': 67, 'vmnet': 68, 'whois': 69}
                 service = service_encoding[service]
         ####    # 4. Flags
                 # OTH (Other): 0x00 (No flags set)
@@ -215,6 +221,9 @@ def scanAttacks(file_name):
                     # attack_type = model.predict([packet_array])
                     # packet_array.append(attack_encoding[attack_type[0]])
                     packet_array.append(attack_encoding[model.predict([packet_array])[0]])
+                    packet_array[1] = reverse_protocol_encoding[packet_array[1]]
+                    packet_array[2] = reverse_service_encoding[packet_array[2]]
+                    packet_array[3] = reverse_flag_encoding[packet_array[3]]
                     result_array.append(packet_array)
                     if(n==20):
                         break
@@ -260,7 +269,7 @@ def scanPCAP(request):
 def scanLiveTraffic(request):
     asyncio.set_event_loop(loop)
     capture = pyshark.LiveCapture(interface='Wi-Fi')
-    capture.sniff(timeout=3)
+    capture.sniff(timeout=1)
 
     result_array = []
 
@@ -283,7 +292,7 @@ def scanLiveTraffic(request):
             duration = float(packet.frame_info.time_delta_displayed) * 10**6
             
     ####    # 2. Protocol Type
-            protocol_type_encoding = {'icmp': 0, 'tcp': 1, 'udp': 2, 'oth': -1}
+            # protocol_type_encoding = {'icmp': 0, 'tcp': 1, 'udp': 2, 'oth': -1}
             protocolTypeValue = packet.frame_info.protocols
             
             if 'icmp' in protocolTypeValue:
@@ -320,16 +329,6 @@ def scanLiveTraffic(request):
             service = serviceType
             if service == 'None':
                 service = random.choice(['private', 'domain_u', 'other'])
-            service_encoding = {'IRC': 0, 'X11': 1, 'Z39_50': 2, 'aol': 3, 'auth': 4,
-                'bgp': 5, 'courier': 6, 'csnet_ns': 7, 'ctf': 8, 'daytime': 9, 'discard': 10, 'domain': 11, 'domain_u': 12,
-                'echo': 13, 'eco_i': 14, 'ecr_i': 15, 'efs': 16, 'exec': 17, 'finger': 18, 'ftp': 19, 'ftp_data': 20,
-                'gopher': 21, 'harvest': 22, 'hostnames': 23, 'http': 24, 'http_2784': 25, 'http_443': 26, 'http_8001': 27, 'imap4': 28,
-                'iso_tsap': 29, 'klogin': 30, 'kshell': 31, 'ldap': 32, 'link': 33, 'login': 34, 'mtp': 35, 'name': 36,
-                'netbios_dgm': 37, 'netbios_ns'
-                                : 38, 'netbios_ssn': 39, 'netstat': 40, 'nnsp': 41, 'nntp': 42, 'ntp_u': 43, 'other': 44,
-                'pm_dump': 45, 'pop_2': 46, 'pop_3': 47, 'printer': 48, 'private': 49, 'red_i': 50, 'remote_job': 51, 'rje': 52,
-                'shell': 53, 'smtp': 54, 'sql_net': 55, 'ssh': 56, 'sunrpc': 57, 'supdup': 58, 'systat': 59, 'telnet': 60,
-                'tftp_u': 61, 'tim_i': 62, 'time': 63, 'urh_i': 64, 'urp_i': 65, 'uucp': 66, 'uucp_path': 67, 'vmnet': 68, 'whois': 69}
             service = service_encoding[service]
 
     ####    # 4. Flags
@@ -371,7 +370,7 @@ def scanLiveTraffic(request):
             else:
                 flag = 'OTH'
 
-            flag_encoding = {'OTH': 0, 'REJ': 1, 'RSTO': 2, 'RSTOS0': 3, 'RSTR': 4, 'S0': 5, 'S1': 6, 'S2': 7, 'S3': 8, 'SF': 9, 'SH': 10}
+            # flag_encoding = {'OTH': 0, 'REJ': 1, 'RSTO': 2, 'RSTOS0': 3, 'RSTR': 4, 'S0': 5, 'S1': 6, 'S2': 7, 'S3': 8, 'SF': 9, 'SH': 10}
             flag = flag_encoding[flag]
 
         # 5 & 6. Source and Destination Lengths
@@ -466,8 +465,11 @@ def scanLiveTraffic(request):
                 # attack_type = model.predict([packet_array])
                 # packet_array.append(attack_encoding[attack_type[0]])
                 packet_array.append(attack_encoding[model.predict([packet_array])[0]])
+                packet_array[1] = reverse_protocol_encoding[packet_array[1]]
+                packet_array[2] = reverse_service_encoding[packet_array[2]]
+                packet_array[3] = reverse_flag_encoding[packet_array[3]]
                 result_array.append(packet_array)
-                if(n==20):
+                if(n==30):
                     break
         except AttributeError as e:
             pass

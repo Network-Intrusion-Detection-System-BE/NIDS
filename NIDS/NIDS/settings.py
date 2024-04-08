@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 ]
 
 # Server-Sent Events
-# ASGI_APPLICATION = "NIDS.asgi.application"
+ASGI_APPLICATION = "NIDS.asgi.application"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

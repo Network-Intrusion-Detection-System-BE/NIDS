@@ -31,12 +31,11 @@ Scan Packets
                 id="pcap-file"
                 class="p-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 accept=".pcap, .pcapng"
-                
               />
             </div>
             <button
               type="submit"
-              class="disabled:opacity-50 bg-[#0eff00] hover:bg-[#1fc600] text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 disabled:cursor-not-allowed"
+              class="disabled:opacity-50 bg-[#0eff00] hover:bg-[#1fc600] text-black font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 disabled:cursor-not-allowed"
             >
               Analyze PCAP
             </button>
@@ -46,7 +45,7 @@ Scan Packets
       <form method="get" action="{% url 'scanLiveTraffic' %}">
         <div class="mt-8 text-center">
           <button
-            class="bg-[#0eff00] hover:bg-[#1fc600] text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:offset-2 focus:ring-green-700"
+            class="bg-[#0eff00] hover:bg-[#1fc600] text-black font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:offset-2 focus:ring-green-700"
             type="submit"
           >
             Start Live Traffic Analysis

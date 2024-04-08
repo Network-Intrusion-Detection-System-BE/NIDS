@@ -11,7 +11,7 @@ Home
         height="500"
         src="{% static 'HomePage-Pic.png' %}"
         alt="NIDS Image"
-        class="rounded-lg shadow-md mb-5"
+        class="rounded-lg shadow-md mb-5 ml-10 pl-5"
       />
     </div>
     <div class="w-full md:w-1/2 px-4 pt-8 md:pt-0">
@@ -24,7 +24,7 @@ Home
       <div class="flex justify-center md:justify-start">
         <form method="post" enctype="multipart/form-data" action="{% url 'gotoScan' %}">
           {% csrf_token %} 
-          <button class="bg-[#0eff00] hover:bg-[#1fc600] text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-700 hover:scale-110">
+          <button class="bg-[#0eff00] hover:bg-[#1fc600] text-black font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-700 hover:scale-110">
             Get Started
           </button>
         </form>
