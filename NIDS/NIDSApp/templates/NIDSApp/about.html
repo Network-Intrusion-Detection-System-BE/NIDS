@@ -1,51 +1,62 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Scan Packets
+About
 {% endblock title %}
 {% block content %}
 
   <div class="bg-gradient-to-bl from-black to-gray-600 min-h-screen text-white p-24 my-auto mx-auto">
-    <p class="text-xl typing animate-typing">Ever vigilant, NIDS application safeguards your network. 
-      It examines both recorded traffic (pcap files) and live internet <br> activity, searching for patterns 
-      that indicate potential threats. By recognizing known malicious activity and spotting <br> unusual behavior, 
-      it acts as your network's first line of defense.</p>
+    <p class="text-xl">Ever vigilant, NIDS application safeguards your network. It examines both 
+      recorded traffic (pcap files) and live internet activity, searching for patterns that indicate potential 
+      threats. By recognizing known malicious activity and spotting unusual behavior, it acts as your network's 
+      first line of defense.
+    </p>
     <br> <br>
-    <h3 class="text-3xl text-bold typing animate-typing text-[#0eff00]">Need for NIDS</h3>
+    <h3 class="text-3xl text-bold typewriter-container text-[#0eff00]">Need for NIDS</h3>
     <ul class="list-disc">
-      <li class="text-xl typing animate-typing"># NIDS provide in-depth visibility into what's happening on your network.</li>
-      <li class="text-xl typing animate-typing"># By promptly identifying suspicious activity, NIDS can help you react to threats quicker, minimizing potential damage.</li>
-      <li class="text-xl typing animate-typing"># Early detection of intrusions allows you to take action and stop them before they can cause significant disruption.</li>
+      <li class="text-xl"><span class="font-black text-[#0eff00]">#</span> NIDS provide in-depth visibility into what's happening on your network.</li>
+      <li class="text-xl"><span class="font-black text-[#0eff00]">#</span> By promptly identifying suspicious activity, NIDS can help you react to threats quicker, minimizing potential damage.</li>
+      <li class="text-xl"><span class="font-black text-[#0eff00]">#</span> Early detection of intrusions allows you to take action and stop them before they can cause significant disruption.</li>
     </ul>
     <br> <br>
-    <h3 class="text-3xl text-bold typing animate-typing text-[#0eff00]">Benefits of NIDS</h3>
+    <h3 class="text-3xl text-bold typewriter-container text-[#0eff00]">Benefits of NIDS</h3>
     <ul class="list-disc">
-      <li class="text-xl typing animate-typing"># NIDS constantly analyzes network traffic, allowing for immediate identification of suspicious activity.</li>
-      <li class="text-xl typing animate-typing"># Compared to Host-based IDS (HIDS) that focus on individual devices, NIDS can monitor your entire network.</li>
-      <li class="text-xl typing animate-typing"># Early detection of intrusions allows you to take action and stop them before they can cause significant disruption.</li>
+      <li class="text-xl"><span class="font-black text-[#0eff00]">#</span> NIDS constantly analyzes network traffic, allowing for immediate identification of suspicious activity.</li>
+      <li class="text-xl"><span class="font-black text-[#0eff00]">#</span> Compared to Host-based IDS (HIDS) that focus on individual devices, NIDS can monitor your entire network.</li>
+      <li class="text-xl"><span class="font-black text-[#0eff00]">#</span> Early detection of intrusions allows you to take action and stop them before they can cause significant disruption.</li>
     </ul>
     <br> <br>
-    <h3 class="text-3xl text-bold typing animate-typing text-[#0eff00]">Functionalities of NIDS</h3>
+    <h3 class="text-3xl text-bold typewriter-container text-[#0eff00]">Functionalities of NIDS</h3>
     <ul class="list-disc">
-      <li class="text-xl typing animate-typing"># NIDS functions like a network sniffer, capturing all data packets flowing through the designated network segment.</li>
-      <li class="text-xl typing animate-typing"># NIDS meticulously compare network traffic patterns to these signatures to identify suspicious events.</li>
-      <li class="text-xl typing animate-typing"># NIDS meticulously log all network traffic data and detected events.</li>
+      <li class="text-xl"><span class="font-black text-[#0eff00]">#</span> NIDS functions like a network sniffer, capturing all data packets flowing through the designated network segment.</li>
+      <li class="text-xl"><span class="font-black text-[#0eff00]">#</span> NIDS meticulously compare network traffic patterns to these signatures to identify suspicious events.</li>
+      <li class="text-xl"><span class="font-black text-[#0eff00]">#</span> NIDS meticulously log all network traffic data and detected events.</li>
     </ul>
   </div>
 
-<style>
-    .typing {
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 2px solid white; /* Adjust color to match background */
-      width: 0;
-      animation: typing 3s steps(40, end) forwards;
-      /* animation: typing 3s ease forwards; */
+  <style>
+    .list-disc {
+      list-style-type: none;
     }
-  
+
     @keyframes typing {
       from { width: 0; }
       to { width: 100%; }
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #0eff00; }
+    }
+
+    .typewriter-container {
+      overflow: hidden; /* Ensures the content is not revealed until the animation */
+      border-right: .15em solid #0eff00; /* The typwriter cursor */
+      white-space: nowrap; /* Keeps the content on a single line */
+      letter-spacing: .15em; /* Adjust as needed */
+      animation: 
+        typing 3.5s steps(40, end),
+        blink-caret .75s step-end infinite;
     }
   </style>
 

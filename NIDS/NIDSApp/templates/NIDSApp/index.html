@@ -15,9 +15,7 @@ Home
       />
     </div>
     <div class="w-full md:w-1/2 px-4 pt-8 md:pt-0">
-      <h1 class="text-4xl text-[#0eff00] font-bold text-center md:text-left mb-8">
-        Advanced Network Security with ML-powered NIDS
-      </h1>
+      <h1 id='demo' class="text-4xl text-[#0eff00] font-bold text-center md:text-left mb-8"></h1>
       <p class="text-xl text-center md:text-left mb-12">
         Empower Your Network's Defense: Harnessing Machine Learning for Unparalleled Security
       </p>
@@ -32,5 +30,20 @@ Home
     </div>
   </div>
 </div>
+
+<script>
+  var i = 0;
+  var txt = 'Advanced Network Security with ML-powered NIDS!'; /* The text */
+  var speed = 50; /* The speed/duration of the effect in milliseconds */
+
+  function typeWriter() {
+    if (i < txt.length) {
+      document.getElementById("demo").innerHTML += txt.charAt(i);
+      i++;
+      setTimeout(typeWriter, speed);
+    }
+  }
+  typeWriter();
+</script>
 
 {% endblock content %}    

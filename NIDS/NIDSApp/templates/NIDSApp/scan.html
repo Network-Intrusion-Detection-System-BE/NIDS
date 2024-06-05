@@ -42,16 +42,24 @@ Scan Packets
           </div>
         </form>
       </div>
-      <form method="get" action="{% url 'scanLiveTraffic' %}">
-        <div class="mt-8 text-center">
+      {% comment %} action="{% url 'scanLiveTraffic' %}" {% endcomment %}
+      {% comment %} <form method="get"> {% endcomment %}
+        <div class="mt-8 text-center" >
           <button
             class="bg-[#0eff00] hover:bg-[#1fc600] text-black font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:offset-2 focus:ring-green-700"
             type="submit"
+            id="live-traffic-button"
           >
             Start Live Traffic Analysis
           </button>
         </div>
-      </form>
+      {% comment %} </form> {% endcomment %}
     </div>
   </div>
+  <script>
+    document.getElementById('live-traffic-button').addEventListener('click', function() {
+      console.log('Button clicked!') // Change this message to whatever you want to print
+      window.location.href = 'http://127.0.0.1:8000/live/'
+    });
+  </script>  
 {% endblock content %}    
